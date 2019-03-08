@@ -4,76 +4,80 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.Nullable;
 
+import com.igor.scrumassistant.data.constants.Priority;
+import com.igor.scrumassistant.data.constants.State;
+
 @Entity
 public class Task {
 
     @PrimaryKey(autoGenerate = true)
-    private long id;
-    private String purpose;
-    private State state;
-    private long executorId;
-    private long projectId;
-    private long creatorId;
+    private long mId;
+    private String mPurpose;
+    private State mState;
+    private Priority mPriority;
+    private long mExecutorId;
+    private long mProjectId;
+    private long mCreatorId;
 
     public Task(String purpose, long executorId, long projectId, long creatorId) {
-        this.purpose = purpose;
-        this.executorId = executorId;
-        this.projectId = projectId;
-        this.creatorId = creatorId;
+        this.mPurpose = purpose;
+        this.mExecutorId = executorId;
+        this.mProjectId = projectId;
+        this.mCreatorId = creatorId;
     }
 
     public Task(String purpose, long projectId, long creatorId) {
-        this.purpose = purpose;
-        this.projectId = projectId;
-        this.creatorId = creatorId;
+        this.mPurpose = purpose;
+        this.mProjectId = projectId;
+        this.mCreatorId = creatorId;
     }
 
     public long getId() {
-        return id;
+        return mId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public String getPurpose() {
-        return purpose;
+        return mPurpose;
     }
 
-    public void setPurpose(String purpose) {
-        this.purpose = purpose;
+    public void setPurpose(String mPurpose) {
+        this.mPurpose = mPurpose;
     }
 
     public State getState() {
-        return state;
+        return mState;
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setState(State mState) {
+        this.mState = mState;
     }
 
     public long getExecutorId() {
-        return executorId;
+        return mExecutorId;
     }
 
     public void setExecutorId(long executorId) {
-        this.executorId = executorId;
+        this.mExecutorId = executorId;
     }
 
     public long getProjectId() {
-        return projectId;
+        return mProjectId;
     }
 
     public void setProjectId(long projectId) {
-        this.projectId = projectId;
+        this.mProjectId = projectId;
     }
 
     public long getCreatorId() {
-        return creatorId;
+        return mCreatorId;
     }
 
     public void setCreatorId(long creatorId) {
-        this.creatorId = creatorId;
+        this.mCreatorId = creatorId;
     }
 
     @Override
@@ -84,16 +88,16 @@ public class Task {
             return false;
 
         Task executor = (Task) obj;
-        return (executor.getPurpose().equals(this.purpose) &&
-                executor.getState().equals(this.state) &&
-                executor.getExecutorId() == this.executorId &&
-                executor.getProjectId() == this.projectId &&
-                executor.getCreatorId() == this.creatorId);
+        return (executor.getPurpose().equals(this.mPurpose) &&
+                executor.getState().equals(this.mState) &&
+                executor.getExecutorId() == this.mExecutorId &&
+                executor.getProjectId() == this.mProjectId &&
+                executor.getCreatorId() == this.mCreatorId);
     }
 
     @Override
     public int hashCode() {
-        return (purpose.hashCode() +
-                state.hashCode());
+        return (mPurpose.hashCode() +
+                mState.hashCode());
     }
 }

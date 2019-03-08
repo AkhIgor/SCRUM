@@ -19,11 +19,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.igor.scrumassistant.R;
+import com.igor.scrumassistant.presentation.MainActivityPresenter;
+import com.igor.scrumassistant.view.MainActivityView;
 import com.igor.scrumassistant.view.fragment.DoneSceneFragment;
 import com.igor.scrumassistant.view.fragment.InWorkSceneFragment;
 import com.igor.scrumassistant.view.fragment.ToDoSceneFragment;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainActivityView {
 
     private static final int SEGMENTS = 3;
 
@@ -34,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
     private ToDoSceneFragment tab1 = ToDoSceneFragment.newInstance();
     private InWorkSceneFragment tab2 = InWorkSceneFragment.newInstance();
     private DoneSceneFragment tab3 = DoneSceneFragment.newInstance();
+
+    private FloatingActionButton mFab;
+    private Toolbar mToolbar;
+
+    private MainActivityPresenter mPresenter;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -54,27 +62,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
+        initViews();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        initListeners();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,6 +89,35 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void showAddingDialogFragment() {
+        mFab.setEnabled(false);
+        mFab.setBackgroundResource(R.color.design_default_color_primary);
+    }
+
+    @Override
+    public void hideAddingDialogFragment() {
+        mFab.setEnabled(true);
+        mFab.setBackgroundResource(R.color.colorAccent);
+    }
+
+    private void initViews() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+    }
+
+    private void initListeners() {
+        mFab.setOnClickListener(v -> mPresenter.onFabClicked());
     }
 
     /**

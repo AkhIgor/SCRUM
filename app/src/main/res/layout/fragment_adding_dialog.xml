@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/menu_color"
+    tools:context=".view.fragment.AddingDialogFragment">
+
+    <TextView
+        android:id="@+id/add_participant_text_view"
+        android:paddingStart="@dimen/margin_tiny"
+        android:paddingTop="@dimen/margin_tiny"
+        android:paddingEnd="@dimen/margin_tiny"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/creating_project"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <View
+        android:id="@+id/separator_view"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/separator_height"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:background="@color/colorPrimary"
+        app:layout_constraintEnd_toEndOf="@id/add_participant_text_view"
+        app:layout_constraintTop_toBottomOf="@id/add_participant_text_view"
+        app:layout_constraintStart_toStartOf="@id/add_participant_text_view"
+        app:layout_constraintBottom_toTopOf="@id/remove_participant_text_view">
+    </View>
+
+    <TextView
+        android:id="@+id/remove_participant_text_view"
+        android:paddingStart="@dimen/margin_tiny"
+        android:paddingEnd="@dimen/margin_tiny"
+        android:paddingBottom="@dimen/margin_tiny"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margin_little"
+        android:text="@string/creating_task"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/add_participant_text_view" />
+
+    <!--<TextView-->
+        <!--android:id="@+id/cancel_text_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="@string/cancel"-->
+        <!--android:textColor="@android:color/black"-->
+        <!--android:textSize="20sp"-->
+        <!--app:layout_constraintTop_toBottomOf="@+id/creating_task_text_view" />-->
+
+</android.support.constraint.ConstraintLayout>

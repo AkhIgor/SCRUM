@@ -1,4 +1,4 @@
-package com.igor.scrumassistant.model;
+package com.igor.scrumassistant.data.constants;
 
 public enum Role {
     DEVELOPER,

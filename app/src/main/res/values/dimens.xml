@@ -14,5 +14,9 @@
     <dimen name="margin_medium">16dp</dimen>
     <dimen name="margin_medium_small">12dp</dimen>
     <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_little">4dp</dimen>
+    <dimen name="margin_tiny">2dp</dimen>
+
+    <dimen name="text_margin">16dp</dimen>
 
 </resources>

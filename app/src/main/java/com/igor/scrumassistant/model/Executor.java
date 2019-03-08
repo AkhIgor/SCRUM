@@ -4,19 +4,21 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.Nullable;
 
+import com.igor.scrumassistant.data.constants.Role;
+
 @Entity
 public class Executor {
 
     @PrimaryKey(autoGenerate = true)
-    private long id;
-    private String name;
-    private String surname;
-    private Role role;
+    private long mId;
+    private String mName;
+    private String mSurname;
+    private Role mRole;
 
     public Executor(String name, String surname, Role role) {
-        this.name = name;
-        this.surname = surname;
-        this.role = role;
+        this.mName = name;
+        this.mSurname = surname;
+        this.mRole = role;
     }
 
     public Executor() {
@@ -24,35 +26,35 @@ public class Executor {
 
 
     public long getId() {
-        return id;
+        return mId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public String getSurname() {
-        return surname;
+        return mSurname;
     }
 
     public void setSurname(String surname) {
-        this.surname = surname;
+        this.mSurname = surname;
     }
 
     public Role getRole() {
-        return role;
+        return mRole;
     }
 
     public void setRole(Role role) {
-        this.role = role;
+        this.mRole = role;
     }
 
     @Override
@@ -63,15 +65,15 @@ public class Executor {
             return false;
 
         Executor executor = (Executor) obj;
-        return (executor.getName().equals(this.name) &&
-                executor.getSurname().equals(this.surname) &&
-                executor.getRole().equals(this.role));
+        return (executor.getName().equals(this.mName) &&
+                executor.getSurname().equals(this.mSurname) &&
+                executor.getRole().equals(this.mRole));
     }
 
     @Override
     public int hashCode() {
-        return (name.hashCode() +
-                surname.hashCode() +
-                role.hashCode());
+        return (mName.hashCode() +
+                mSurname.hashCode() +
+                mRole.hashCode());
     }
 }

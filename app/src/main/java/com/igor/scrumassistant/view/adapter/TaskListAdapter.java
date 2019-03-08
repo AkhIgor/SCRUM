@@ -5,7 +5,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.igor.scrumassistant.model.Task;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder> {
+
+    private List<Task> mTaskList = new ArrayList<>();
+
+    public TaskListAdapter(List<Task> taskList) {
+        mTaskList.addAll(taskList);
+    }
 
     @NonNull
     @Override

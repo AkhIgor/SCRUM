@@ -11,40 +11,41 @@ import java.util.List;
 public class Project {
 
     @PrimaryKey(autoGenerate = true)
-    private long id;
-    private String name;
+    private long mId;
+    private String mName;
+    private long mAuthorId;
     @Ignore
-    private List<Long> participantsId;
+    private List<Long> mParticipantsId;
 
     public Project(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public Project() {
     }
 
     public long getId() {
-        return id;
+        return mId;
     }
 
     public void setId(long id) {
-        this.id = id;
+        this.mId = id;
     }
 
     public String getName() {
-        return name;
+        return mName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.mName = name;
     }
 
     public List<Long> getParticipantsId() {
-        return participantsId;
+        return mParticipantsId;
     }
 
     public void setParticipantsId(List<Long> participantsId) {
-        this.participantsId = participantsId;
+        this.mParticipantsId = participantsId;
     }
 
     @Override
@@ -55,11 +56,11 @@ public class Project {
             return false;
 
         Project executor = (Project) obj;
-        return (executor.getName().equals(this.name));
+        return (executor.getName().equals(this.mName));
     }
 
     @Override
     public int hashCode() {
-        return (name.hashCode());
+        return (mName.hashCode());
     }
 }
