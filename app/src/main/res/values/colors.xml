@@ -6,5 +6,11 @@
     <color name="login_activity_tint_color_primary">#E4EBEB</color>
     <color name="login_activity_tint_color_accent">#AAC0BD</color>
     <color name="white">#FFFFFF</color>
+
     <color name="menu_color">#6ACFDBE9</color>
+
+    <color name="critical_status_color">#D7E00505</color>
+    <color name="high_status_color">#D7F18513</color>
+    <color name="medium_status_color">#DDDDBF13</color>
+    <color name="low_status_color">#D22EC731</color>
 </resources>

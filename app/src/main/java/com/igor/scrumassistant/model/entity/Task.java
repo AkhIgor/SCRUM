@@ -1,4 +1,4 @@
-package com.igor.scrumassistant.model;
+package com.igor.scrumassistant.model.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
@@ -16,8 +16,10 @@ public class Task {
     private State mState;
     private Priority mPriority;
     private long mExecutorId;
+    private String mExecutorName;
     private long mProjectId;
     private long mCreatorId;
+    private String mCreatorName;
 
     public Task(String purpose, long executorId, long projectId, long creatorId) {
         this.mPurpose = purpose;
@@ -99,5 +101,29 @@ public class Task {
     public int hashCode() {
         return (mPurpose.hashCode() +
                 mState.hashCode());
+    }
+
+    public Priority getPriority() {
+        return mPriority;
+    }
+
+    public void setPriority(Priority mPriority) {
+        this.mPriority = mPriority;
+    }
+
+    public String getExecutorName() {
+        return mExecutorName;
+    }
+
+    public void setExecutorName(String mExecutorName) {
+        this.mExecutorName = mExecutorName;
+    }
+
+    public String getCreatorName() {
+        return mCreatorName;
+    }
+
+    public void setCreatorName(String mCreatorName) {
+        this.mCreatorName = mCreatorName;
     }
 }

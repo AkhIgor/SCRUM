@@ -1,4 +1,4 @@
-package com.igor.scrumassistant.model;
+package com.igor.scrumassistant.model.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;

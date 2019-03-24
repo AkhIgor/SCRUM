@@ -17,7 +17,22 @@
     <string name="add_participant">Добавить участника</string>
     <string name="remove_participant">Удалить участника</string>
     <string name="change_the_current_project">Сменить проект</string>
+    <!--Адаптер<-->
+    <string name="item_selected">Выьран элемент спика</string>
+    <!--Создание задачи -->
+    <string name="task_priority">Приоритет задачи</string>
     <string name="exit">Выйти</string>
+    <!--Статусы -->
+    <string name="critical_status">Критическая</string>
+    <string name="high_status">Высокая</string>
+    <string name="medium_status">Средняя</string>
+    <string name="low_status">Низкая</string>
+    <!--Роли -->
+    <string name="analytic_role">Аналитик</string>
+    <string name="designer_role">Дизайнер</string>
+    <string name="developer_role">Разаботчик</string>
+    <string name="scrum_master_role">SCRUM-мастер</string>
+    <string name="product_owner_role">Владелец продукта</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Логин</string>
     <string name="prompt_password">Пароль</string>

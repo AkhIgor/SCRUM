@@ -103,6 +103,16 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
         mFab.setBackgroundResource(R.color.colorAccent);
     }
 
+    @Override
+    public void showAddingProjectDialogFragment() {
+
+    }
+
+    @Override
+    public void hideAddingProjectDialogFragment() {
+
+    }
+
     private void initViews() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
