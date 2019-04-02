@@ -11,5 +11,5 @@ public interface CreatingActivityView extends MvpView {
 
     void setListEnabled(@NonNull List<Executor> executorList);
 
-    void createTask();
+    void addTaskToList();
 }

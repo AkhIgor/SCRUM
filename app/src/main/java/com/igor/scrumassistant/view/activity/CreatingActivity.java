@@ -1,36 +1,32 @@
 package com.igor.scrumassistant.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.igor.scrumassistant.R;
+import com.igor.scrumassistant.data.constants.Priority;
 import com.igor.scrumassistant.model.entity.CurrentUser;
 import com.igor.scrumassistant.model.entity.Executor;
 import com.igor.scrumassistant.model.entity.Task;
-import com.igor.scrumassistant.presentation.CreatingActivityPresenter;
+import com.igor.scrumassistant.presentation.activity.CreatingActivityPresenter;
 import com.igor.scrumassistant.view.CreatingActivityView;
 import com.igor.scrumassistant.view.adapter.ExecutorListAdapter;
-import com.igor.scrumassistant.view.adapter.SelectionHelper;
-import com.igor.scrumassistant.view.adapter.SelectionObserver;
 
 import java.util.List;
 
 public class CreatingActivity extends AppCompatActivity implements CreatingActivityView {
-
-    private final ActionModeCallback mActionModeCallback = new ActionModeCallback();
 
     private EditText mDescriptionText;
     private FloatingActionButton mSaveButton;
@@ -41,8 +37,14 @@ public class CreatingActivity extends AppCompatActivity implements CreatingActiv
 
     private List<Executor> mExecutorList;
 
+    private Task newTask;
+
     @InjectPresenter
     CreatingActivityPresenter mPresenter;
+
+    public static Intent newIntent(@NonNull Context context) {
+        return new Intent(context, CreatingActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +56,9 @@ public class CreatingActivity extends AppCompatActivity implements CreatingActiv
         initViews();
     }
 
-
-    public void startActionMode() {
-        startActionMode(mActionModeCallback);
+    @ProvidePresenter
+    CreatingActivityPresenter providePresenter() {
+        return new CreatingActivityPresenter();
     }
 
     private void initViews() {
@@ -71,70 +73,36 @@ public class CreatingActivity extends AppCompatActivity implements CreatingActiv
     }
 
     public void setListEnabled(@NonNull List<Executor> executorList) {
+        mExecutorList = executorList;
+        mAdapter = new ExecutorListAdapter(mExecutorList);
+        mExecutorListView.setAdapter(mAdapter);
         mProgressBar.setVisibility(View.GONE);
         mExecutorListView.setVisibility(View.VISIBLE);
-        mAdapter = new ExecutorListAdapter(executorList, this);
-        mExecutorListView.setAdapter(mAdapter);
     }
 
     @Override
-    public void createTask() {
+    public void addTaskToList() {
+        createTask();
+        addTaskToDescBoard();
+    }
+
+    private void addTaskToDescBoard() {
+        setResult(RESULT_OK);
+        getIntent().putExtra(Task.class.getCanonicalName(), newTask);
+        mPresenter.addToServer(newTask);
+        finish();
+    }
+
+    private void createTask() {
         String description = mDescriptionText.getText().toString();
         long creatorId = CurrentUser.getUserId();
         long projectId = CurrentUser.getProjectId();
-
-        Task newTask;
-    }
-
-
-    private class ActionModeCallback implements ActionMode.Callback, SelectionObserver {
-        private ActionMode mActionMode;
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-            return false;
+        long executorID = mExecutorList.get(mAdapter.getChosenPosition()).getId();
+        if (executorID != -1) {
+            newTask = new Task(description, executorID, projectId, creatorId);
+        } else {
+            newTask = new Task(description, projectId, creatorId);
         }
-
-        @Override
-        public void onDestroyActionMode(ActionMode actionMode) {
-            SelectionHelper selectionHelper = mAdapter.getSelectionHelper();
-            selectionHelper.unregisterSelectionObserver(this);
-            mActionMode = null;
-            selectionHelper.setSelectable(false);
-        }
-
-        @Override
-        public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-            mActionMode = actionMode;
-//            mActionMode.getMenuInflater().inflate(R.menu.gallery_selection, menu);
-            mAdapter.getSelectionHelper().registerSelectionObserver(this);
-            return true;
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-//            switch (menuItem.getItemId()) {
-//                case R.id.menu_toast:
-                    Toast.makeText(CreatingActivity.this,
-                            R.string.item_selected, Toast.LENGTH_SHORT).show();
-//                    break;
-//            }
-            return true;
-        }
-
-        @Override
-        public void onSelectedChanged(RecyclerView.ViewHolder holder, boolean isSelected) {
-            if (mActionMode != null) {
-                int checkedImagesCount = mAdapter.getSelectionHelper().getSelectedItemsCount();
-                mActionMode.setTitle(String.valueOf(checkedImagesCount));
-            }
-        }
-
-        @Override
-        public void onSelectableChanged(boolean isSelectable) {
-            if (!isSelectable) {
-                mActionMode.finish();
-            }
-        }
+        newTask.setPriority(Priority.getEnum(mPriorityTextView.getText().toString()));
     }
 }

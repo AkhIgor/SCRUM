@@ -1,6 +1,7 @@
 package com.igor.scrumassistant.model.entity;
 
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.Nullable;
 
@@ -14,6 +15,8 @@ public class Executor {
     private String mName;
     private String mSurname;
     private Role mRole;
+    @Ignore
+    private boolean mIsChosen = false;
 
     public Executor(String name, String surname, Role role) {
         this.mName = name;
@@ -75,5 +78,13 @@ public class Executor {
         return (mName.hashCode() +
                 mSurname.hashCode() +
                 mRole.hashCode());
+    }
+
+    public boolean isChosen() {
+        return mIsChosen;
+    }
+
+    public void setChosen(boolean chosen) {
+        this.mIsChosen = mIsChosen;
     }
 }

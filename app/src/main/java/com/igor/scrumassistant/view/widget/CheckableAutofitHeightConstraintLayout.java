@@ -3,36 +3,37 @@ package com.igor.scrumassistant.view.widget;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.support.constraint.ConstraintLayout;
 import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
 
-public class CheckableAutofitHeightFrameLayout extends FrameLayout implements Checkable {
+public class CheckableAutofitHeightConstraintLayout extends ConstraintLayout implements Checkable {
     private static final int[] CHECKED_STATE_SET = {android.R.attr.state_checked};
 
     private boolean mIsChecked;
     private boolean mIsCheckable;
 
-    public CheckableAutofitHeightFrameLayout(Context context)
+    public CheckableAutofitHeightConstraintLayout(Context context)
     {
         super(context);
     }
 
-    public CheckableAutofitHeightFrameLayout(Context context, AttributeSet attrs)
+    public CheckableAutofitHeightConstraintLayout(Context context, AttributeSet attrs)
     {
         super(context, attrs);
     }
 
-    public CheckableAutofitHeightFrameLayout(Context context, AttributeSet attrs, int defStyleAttr)
+    public CheckableAutofitHeightConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr)
     {
         super(context, attrs, defStyleAttr);
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public CheckableAutofitHeightFrameLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
-    {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
+//    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+//    public CheckableAutofitHeightConstraintLayout(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes)
+//    {
+//        super(context, attrs, defStyleAttr);
+//    }
 
     @Override
     protected int[] onCreateDrawableState(int extraSpace)

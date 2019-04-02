@@ -2,13 +2,15 @@ package com.igor.scrumassistant.model.entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
 import com.igor.scrumassistant.data.constants.Priority;
 import com.igor.scrumassistant.data.constants.State;
 
 @Entity
-public class Task {
+public class Task implements Parcelable {
 
     @PrimaryKey(autoGenerate = true)
     private long mId;
@@ -33,6 +35,28 @@ public class Task {
         this.mProjectId = projectId;
         this.mCreatorId = creatorId;
     }
+
+    protected Task(Parcel in) {
+        mId = in.readLong();
+        mPurpose = in.readString();
+        mExecutorId = in.readLong();
+        mExecutorName = in.readString();
+        mProjectId = in.readLong();
+        mCreatorId = in.readLong();
+        mCreatorName = in.readString();
+    }
+
+    public static final Creator<Task> CREATOR = new Creator<Task>() {
+        @Override
+        public Task createFromParcel(Parcel in) {
+            return new Task(in);
+        }
+
+        @Override
+        public Task[] newArray(int size) {
+            return new Task[size];
+        }
+    };
 
     public long getId() {
         return mId;
@@ -82,27 +106,6 @@ public class Task {
         this.mCreatorId = creatorId;
     }
 
-    @Override
-    public boolean equals(@Nullable Object obj) {
-        if (obj == this)
-            return true;
-        else if (obj == null || obj.getClass() != this.getClass())
-            return false;
-
-        Task executor = (Task) obj;
-        return (executor.getPurpose().equals(this.mPurpose) &&
-                executor.getState().equals(this.mState) &&
-                executor.getExecutorId() == this.mExecutorId &&
-                executor.getProjectId() == this.mProjectId &&
-                executor.getCreatorId() == this.mCreatorId);
-    }
-
-    @Override
-    public int hashCode() {
-        return (mPurpose.hashCode() +
-                mState.hashCode());
-    }
-
     public Priority getPriority() {
         return mPriority;
     }
@@ -125,5 +128,42 @@ public class Task {
 
     public void setCreatorName(String mCreatorName) {
         this.mCreatorName = mCreatorName;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj == this)
+            return true;
+        else if (obj == null || obj.getClass() != this.getClass())
+            return false;
+
+        Task executor = (Task) obj;
+        return (executor.getPurpose().equals(this.mPurpose) &&
+                executor.getState().equals(this.mState) &&
+                executor.getExecutorId() == this.mExecutorId &&
+                executor.getProjectId() == this.mProjectId &&
+                executor.getCreatorId() == this.mCreatorId);
+    }
+
+    @Override
+    public int hashCode() {
+        return (mPurpose.hashCode() +
+                mState.hashCode());
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(mId);
+        dest.writeString(mPurpose);
+        dest.writeLong(mExecutorId);
+        dest.writeString(mExecutorName);
+        dest.writeLong(mProjectId);
+        dest.writeLong(mCreatorId);
+        dest.writeString(mCreatorName);
     }
 }

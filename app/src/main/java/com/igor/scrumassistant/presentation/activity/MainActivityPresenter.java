@@ -1,4 +1,4 @@
-package com.igor.scrumassistant.presentation;
+package com.igor.scrumassistant.presentation.activity;
 
 
 public class MainActivityPresenter {
