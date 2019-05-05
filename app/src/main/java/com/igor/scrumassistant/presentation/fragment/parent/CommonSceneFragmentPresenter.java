@@ -49,13 +49,8 @@ public abstract class CommonSceneFragmentPresenter extends MvpPresenter<CommonSc
     public abstract void onTaskSwiped(@NonNull Swipe swipe, int position);
 
     public void onAddChangedTaskStateToList(@NonNull Task task) {
+        mTaskList.add(0, task);
         getViewState().addTaskToList(task);
-    }
-
-    //Для синхронизации нужно иметь одинаковые списки
-    //Может можно убрать
-    public void onTaskAdded(@NonNull Task task) {
-        mTaskList.add(task);
     }
 
     @Override

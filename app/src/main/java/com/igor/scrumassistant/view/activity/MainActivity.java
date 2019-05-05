@@ -21,9 +21,7 @@ import android.widget.TextView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.igor.scrumassistant.R;
-import com.igor.scrumassistant.data.constants.Priority;
 import com.igor.scrumassistant.data.constants.State;
-import com.igor.scrumassistant.data.database.Database;
 import com.igor.scrumassistant.model.entity.CurrentUser;
 import com.igor.scrumassistant.model.entity.Task;
 import com.igor.scrumassistant.presentation.activity.MainActivityPresenter;
@@ -119,7 +117,20 @@ public class MainActivity extends MvpAppCompatActivity
 
     @Override
     public void notifyTaskStateChanged(@NonNull State state, @NonNull Task task) {
-
+        switch (state) {
+            case OPEN: {
+                mToDoFragment.addChangedTaskStateToList(task);
+                break;
+            }
+            case IN_WORK: {
+                mInWorkFragment.addChangedTaskStateToList(task);
+                break;
+            }
+            case DONE: {
+                mDoneFragment.addChangedTaskStateToList(task);
+                break;
+            }
+        }
     }
 
     @Override

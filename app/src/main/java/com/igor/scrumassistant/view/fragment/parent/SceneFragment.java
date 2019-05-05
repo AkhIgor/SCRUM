@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.igor.scrumassistant.view.CommonSceneFragmentView;
 import com.igor.scrumassistant.view.TaskStateChangedObserver;
 import com.igor.scrumassistant.view.TaskStateChangedSubscriber;
 import com.igor.scrumassistant.view.adapter.TaskListAdapter;
+import com.igor.scrumassistant.view.adapter.interactive.SimpleItemTouchHelperCallback;
 import com.igor.scrumassistant.view.fragment.ItemSwipeListener;
 import com.igor.scrumassistant.view.fragment.arello.MvpFragment;
 
@@ -79,20 +81,17 @@ public abstract class SceneFragment extends MvpFragment
         mTaskList.clear();
         mTaskList.addAll(taskList);
         mAdapter.updateList(taskList);
-//        mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void addTaskToList(@NonNull Task task) {
         mTaskList.add(0, task);
-        mAdapter.notifyItemInserted(0);
-        mPresenter.onTaskAdded(task);
+        mAdapter.addTaskToTop(task);
     }
 
     @Override
     public void removeTaskFromList(int position) {
         mTaskList.remove(position);
-        mAdapter.notifyItemRemoved(position);
     }
 
     @Override
@@ -117,6 +116,9 @@ public abstract class SceneFragment extends MvpFragment
         mProgressBar = view.findViewById(R.id.common_scene_progress_bar);
         mAdapter = new TaskListAdapter(new ItemSwipeListenerImpl(this), mTaskList);
         mRecyclerView.setAdapter(mAdapter);
+        ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mRecyclerView);
     }
 
     private static class ItemSwipeListenerImpl implements ItemSwipeListener {

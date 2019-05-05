@@ -79,9 +79,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
 
     @Override
     public void onItemSwipe(@NonNull Swipe swipe, int position) {
-        mSwipeListener.onItemSwipe(swipe, position);
         mTaskList.remove(position);
         notifyItemRemoved(position);
+        mSwipeListener.onItemSwipe(swipe, position);
+    }
+
+    public void addTaskToTop(@NonNull Task task) {
+        mTaskList.add(0, task);
+        notifyItemInserted(0);
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {

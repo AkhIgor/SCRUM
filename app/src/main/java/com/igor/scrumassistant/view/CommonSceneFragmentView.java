@@ -3,7 +3,6 @@ package com.igor.scrumassistant.view;
 import android.support.annotation.NonNull;
 
 import com.arellomobile.mvp.MvpView;
-import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndStrategy;
 import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
@@ -26,7 +25,7 @@ public interface CommonSceneFragmentView extends MvpView {
     @StateStrategyType(AddToEndStrategy.class)
     void removeTaskFromList(int position);
 
-    @StateStrategyType(AddToEndStrategy.class)
+    @StateStrategyType(OneExecutionStateStrategy.class)
     void notifyTaskPriorityChanged(@NonNull State state, @NonNull Task task);
 
     @StateStrategyType(AddToEndStrategy.class)
