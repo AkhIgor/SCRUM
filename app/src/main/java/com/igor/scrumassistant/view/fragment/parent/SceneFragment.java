@@ -60,6 +60,12 @@ public abstract class SceneFragment extends MvpFragment
         initViews(view);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPresenter.startFragment();
+    }
+
     //вызов метода из Handler
     public void setTaskList(@NonNull List<Task> taskList) {
         mTaskList = taskList;

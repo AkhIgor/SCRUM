@@ -38,10 +38,7 @@ public abstract class CommonSceneFragmentPresenter extends MvpPresenter<CommonSc
     }
 
     //родительский класс
-    @Override
-    protected void onFirstViewAttach() {
-        super.onFirstViewAttach();
-
+    public void startFragment() {
         getList();
     }
 
