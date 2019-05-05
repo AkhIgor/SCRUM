@@ -12,16 +12,17 @@
     <string name="creating_task">Создать задачу</string>
     <string name="cancel">Отмена</string>
     <string name="set_the_executor">Назначить исполнителя:</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="participants">Участники:</string>
     <!--Меню-->
     <string name="add_participant">Добавить участника</string>
     <string name="remove_participant">Удалить участника</string>
     <string name="change_the_current_project">Сменить проект</string>
     <!--Адаптер<-->
-    <string name="item_selected">Выьран элемент спика</string>
+    <string name="item_selected">Выбран элемент спика</string>
     <!--Создание задачи -->
     <string name="task_priority">Приоритет задачи</string>
     <string name="exit">Выйти</string>
+    <string name="project_name">Имя проекта</string>
     <!--Статусы -->
     <string name="critical_status">Критическая</string>
     <string name="high_status">Высокая</string>
@@ -30,7 +31,7 @@
     <!--Роли -->
     <string name="analytic_role">Аналитик</string>
     <string name="designer_role">Дизайнер</string>
-    <string name="developer_role">Разаботчик</string>
+    <string name="developer_role">Разработчик</string>
     <string name="scrum_master_role">SCRUM-мастер</string>
     <string name="product_owner_role">Владелец продукта</string>
     <!-- Strings related to login -->
@@ -46,4 +47,6 @@
         completions."
     </string>
     <string name="title_activity_creating">CreatingActivity</string>
+    <string name="title_activity_project_creating">ProjectCreatingActivity</string>
+    <string name="user_not_found">Пользователь не найден. Попробуйте ввести другой логин или пароль</string>
 </resources>

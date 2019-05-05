@@ -6,22 +6,45 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 import com.igor.scrumassistant.data.constants.Priority;
 import com.igor.scrumassistant.data.constants.State;
 
 @Entity
-public class Task implements Parcelable {
+public class Task implements AppEntity, Parcelable {
 
+    @SerializedName("mId")
+    @Expose
     @PrimaryKey(autoGenerate = true)
     private long mId;
+    @SerializedName("mPurpose")
+    @Expose
     private String mPurpose;
-    private State mState;
-    private Priority mPriority;
+    @SerializedName("mState")
+    @Expose
+    private String mState;
+    @SerializedName("mPriority")
+    @Expose
+    private String mPriority;
+    @SerializedName("mExecutorId")
+    @Expose
     private long mExecutorId;
+    @SerializedName("mExecutorName")
+    @Expose
     private String mExecutorName;
+    @SerializedName("mProjectId")
+    @Expose
     private long mProjectId;
+    @SerializedName("mCreatorId")
+    @Expose
     private long mCreatorId;
+    @SerializedName("mCreatorName")
+    @Expose
     private String mCreatorName;
+
+    public Task() {
+    }
 
     public Task(String purpose, long executorId, long projectId, long creatorId) {
         this.mPurpose = purpose;
@@ -74,11 +97,15 @@ public class Task implements Parcelable {
         this.mPurpose = mPurpose;
     }
 
-    public State getState() {
+    public String getState() {
         return mState;
     }
 
     public void setState(State mState) {
+        this.mState = mState.toString();
+    }
+
+    public void setState(String mState) {
         this.mState = mState;
     }
 
@@ -106,11 +133,15 @@ public class Task implements Parcelable {
         this.mCreatorId = creatorId;
     }
 
-    public Priority getPriority() {
+    public String getPriority() {
         return mPriority;
     }
 
     public void setPriority(Priority mPriority) {
+        this.mPriority = mPriority.toString();
+    }
+
+    public void setPriority(String mPriority) {
         this.mPriority = mPriority;
     }
 

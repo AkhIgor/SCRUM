@@ -22,12 +22,12 @@ public class ExecutorListAdapter extends RecyclerView.Adapter<ExecutorListAdapte
 //    private SelectionHelper mSelectionHelper;
 //    private WeakHolderTracker mHolderTracker;
 
-//    private final WeakReference<CreatingActivity> mActivityRef;
+//    private final WeakReference<TaskCreatingActivity> mActivityRef;
 
     private List<Executor> mExecutorList = new ArrayList<>();
     private int mPositionChosen = -1;
 
-//    public ExecutorListAdapter(@NonNull List<Executor> executorList, @NonNull CreatingActivity activity) {
+//    public ExecutorListAdapter(@NonNull List<Executor> executorList, @NonNull TaskCreatingActivity activity) {
 //        mExecutorList = executorList;
 //        mActivityRef = new WeakReference<>(activity);
 //        mHolderTracker = new WeakHolderTracker();
@@ -57,7 +57,7 @@ public class ExecutorListAdapter extends RecyclerView.Adapter<ExecutorListAdapte
         String executorName = mExecutorList.get(position).getName() + " " + mExecutorList.get(position).getSurname();
 
         executorViewHolder.mNameTextView.setText(executorName);
-        setRole(executorViewHolder.mRoleTextView, mExecutorList.get(position).getRole());
+        setRole(executorViewHolder.mRoleTextView, Role.valueOf(mExecutorList.get(position).getRole()));
         executorViewHolder.mRadioButton.setChecked(mExecutorList.get(position).isChosen());
 //        Checkable view = (Checkable) executorViewHolder.itemView;
 //        view.setChecked(mSelectionHelper.isItemSelected(position));
@@ -74,7 +74,7 @@ public class ExecutorListAdapter extends RecyclerView.Adapter<ExecutorListAdapte
     }
 
 //    @Override
-//    public void onSelectedChanged(RecyclerView.ViewHolder holder, boolean isSelected) {
+//    public void onSelectedChanged(RecyclerView.ProjectViewHolder holder, boolean isSelected) {
 //        ((Checkable) holder.itemView).setChecked(isSelected);
 //    }
 
@@ -108,7 +108,7 @@ public class ExecutorListAdapter extends RecyclerView.Adapter<ExecutorListAdapte
     }
 
 //    @Override
-//    public void onHolderClick(RecyclerView.ViewHolder holder) {
+//    public void onHolderClick(RecyclerView.ProjectViewHolder holder) {
 //
 //    }
 
@@ -121,7 +121,7 @@ public class ExecutorListAdapter extends RecyclerView.Adapter<ExecutorListAdapte
     }
 //
 //    @Override
-//    public boolean onHolderLongClick(RecyclerView.ViewHolder holder) {
+//    public boolean onHolderLongClick(RecyclerView.ProjectViewHolder holder) {
 //        return false;
 //    }
 

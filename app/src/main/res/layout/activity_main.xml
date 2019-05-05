@@ -43,11 +43,24 @@
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_input_add" />
 
-    <fragment
+    <FrameLayout
+        android:id="@+id/small_menu_fragment_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_marginBottom="@dimen/margin_large"
-        android:layout_marginEnd="@dimen/margin_medium"/>
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginBottom="@dimen/margin_large">
+
+    </FrameLayout>
+
+    <!--<fragment-->
+        <!--android:name="com.igor.scrumassistant.view.fragment.AddingDialogFragment"-->
+        <!--android:id="@+id/small_menu_fragment_container"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="end|bottom"-->
+        <!--android:layout_marginEnd="@dimen/margin_medium"-->
+        <!--android:layout_marginBottom="@dimen/margin_large"-->
+        <!--tools:layout="@layout/fragment_adding_dialog" />-->
 
 </android.support.design.widget.CoordinatorLayout>

@@ -9,17 +9,21 @@ import android.widget.TextView;
 
 import com.igor.scrumassistant.R;
 import com.igor.scrumassistant.data.constants.Priority;
-import com.igor.scrumassistant.model.entity.Executor;
+import com.igor.scrumassistant.data.constants.Swipe;
 import com.igor.scrumassistant.model.entity.Task;
+import com.igor.scrumassistant.view.adapter.interactive.ITouchHelperAdapter;
+import com.igor.scrumassistant.view.fragment.ItemSwipeListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder> {
+public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>
+        implements ITouchHelperAdapter {
 
-    private List<Task> mTaskList = new ArrayList<>();
+    private final ItemSwipeListener mSwipeListener;
+    private List<Task> mTaskList;
 
-    public TaskListAdapter(@NonNull List<Task> taskList) {
+    public TaskListAdapter(@NonNull ItemSwipeListener listener, @NonNull List<Task> taskList) {
+        mSwipeListener = listener;
         mTaskList = taskList;
     }
 
@@ -36,7 +40,7 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         taskViewHolder.mIdTextView.setText(String.valueOf(mTaskList.get(i).getId()));
         taskViewHolder.mDescriptionTextView.setText(mTaskList.get(i).getPurpose());
         taskViewHolder.mAuthorTextView.setText(mTaskList.get(i).getCreatorName());
-        setPriority(taskViewHolder.mPriorityTextView, mTaskList.get(i).getPriority());
+        setPriority(taskViewHolder.mPriorityTextView, Priority.valueOf(mTaskList.get(i).getPriority()));
         if (mTaskList.get(i).getExecutorId() != -1) {
             taskViewHolder.mExecutorTextView.setText(mTaskList.get(i).getExecutorName());
         }
@@ -45,6 +49,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     @Override
     public int getItemCount() {
         return mTaskList.size();
+    }
+
+    public void updateList(@NonNull List<Task> tasks) {
+        mTaskList = tasks;
+        notifyDataSetChanged();
     }
 
     private void setPriority(@NonNull TextView priorityText, @NonNull Priority priority) {
@@ -66,6 +75,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
                 priorityText.setTextColor(priorityText.getResources().getColor(R.color.critical_status_color));
                 break;
         }
+    }
+
+    @Override
+    public void onItemSwipe(@NonNull Swipe swipe, int position) {
+        mSwipeListener.onItemSwipe(swipe, position);
+        mTaskList.remove(position);
+        notifyItemRemoved(position);
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {

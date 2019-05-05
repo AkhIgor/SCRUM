@@ -5,19 +5,19 @@ public class Name {
     private String mName;
     private String mSurname;
 
-    public String getmName() {
+    public String getName() {
         return mName;
     }
 
-    public void setmName(String mName) {
+    public void setName(String mName) {
         this.mName = mName;
     }
 
-    public String getmSurname() {
+    public String getSurname() {
         return mSurname;
     }
 
-    public void setmSurname(String mSurname) {
+    public void setSurname(String mSurname) {
         this.mSurname = mSurname;
     }
 }

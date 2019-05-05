@@ -1,32 +1,45 @@
 package com.igor.scrumassistant.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.igor.scrumassistant.R;
+import com.igor.scrumassistant.data.constants.Priority;
+import com.igor.scrumassistant.data.constants.State;
+import com.igor.scrumassistant.data.database.Database;
+import com.igor.scrumassistant.model.entity.CurrentUser;
+import com.igor.scrumassistant.model.entity.Task;
 import com.igor.scrumassistant.presentation.activity.MainActivityPresenter;
 import com.igor.scrumassistant.view.MainActivityView;
+import com.igor.scrumassistant.view.TaskStateChangedObserver;
+import com.igor.scrumassistant.view.activity.arello.MvpAppCompatActivity;
+import com.igor.scrumassistant.view.fragment.AddingDialogFragment;
 import com.igor.scrumassistant.view.fragment.DoneSceneFragment;
 import com.igor.scrumassistant.view.fragment.InWorkSceneFragment;
 import com.igor.scrumassistant.view.fragment.ToDoSceneFragment;
 
-public class MainActivity extends AppCompatActivity implements MainActivityView {
+public class MainActivity extends MvpAppCompatActivity
+        implements MainActivityView, TaskStateChangedObserver {
+
+    private static final int CREATE_TASK = 0;
+    private static final int CREATE_PROJECT = 1;
 
     private static final int SEGMENTS = 3;
 
@@ -34,41 +47,79 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
     private static final String IN_WORK_BAR = "In work bar";
     private static final String DONE_BAR = "Done bar";
 
-    private ToDoSceneFragment tab1 = ToDoSceneFragment.newInstance();
-    private InWorkSceneFragment tab2 = InWorkSceneFragment.newInstance();
-    private DoneSceneFragment tab3 = DoneSceneFragment.newInstance();
+    private ToDoSceneFragment mToDoFragment = ToDoSceneFragment.newInstance();
+    private InWorkSceneFragment mInWorkFragment = InWorkSceneFragment.newInstance();
+    private DoneSceneFragment mDoneFragment = DoneSceneFragment.newInstance();
 
+    private AddingDialogFragment mAddingDialog = AddingDialogFragment.newInstance();
     private FloatingActionButton mFab;
-    private Toolbar mToolbar;
+
+    public static Intent getIntent(@NonNull Context context) {
+        return new Intent(context, MainActivity.class);
+    }
 
     @InjectPresenter
-    private MainActivityPresenter mPresenter;
-
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
+    MainActivityPresenter mPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        new Thread(() -> {
+//            Task openTask = new Task();
+//            openTask.setState(State.OPEN);
+//            openTask.setPriority(Priority.CRITICAL);
+//            openTask.setPurpose("Доделать диплом");
+//            openTask.setProjectId(CurrentUser.getProjectId(this));
+//            openTask.setExecutorName("Игорь Ахмаров");
+//            openTask.setCreatorName("Игорь Ахмаров");
+//
+//            Task inWorkTask = new Task();
+//            inWorkTask.setState(State.IN_WORK);
+//            inWorkTask.setPriority(Priority.MEDIUM);
+//            inWorkTask.setProjectId(CurrentUser.getProjectId(this));
+//            inWorkTask.setPurpose("Доделать диплом");
+//            inWorkTask.setExecutorName("Игорь Ахмаров");
+//            inWorkTask.setCreatorName("Игорь Ахмаров");
+//
+//            Task doneTask = new Task();
+//            doneTask.setState(State.DONE);
+//            doneTask.setPriority(Priority.HIGH);
+//            doneTask.setProjectId(CurrentUser.getProjectId(this));
+//            doneTask.setPurpose("Доделать диплом");
+//            doneTask.setExecutorName("Игорь Ахмаров");
+//            doneTask.setCreatorName("Игорь Ахмаров");
+//
+//            Database db = Database.initDataBase(this);
+//            db.taskDao()
+//                    .addTask(openTask);
+//
+//            db.taskDao()
+//                    .addTask(inWorkTask);
+//
+//            db.taskDao()
+//                    .addTask(doneTask);
+//        }).start();
         initViews();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        initListeners();
     }
 
     @ProvidePresenter
     MainActivityPresenter providePresenter() {
         return new MainActivityPresenter();
+    }
+
+    public void openTaskCreatingActivity() {
+        startActivityForResult(TaskCreatingActivity.newIntent(this), CREATE_TASK);
+    }
+
+    public void openProjectCreatingActivity() {
+        startActivityForResult(ProjectCreatingActivity.newIntent(this), CREATE_PROJECT);
+    }
+
+    @Override
+    public void notifyTaskStateChanged(@NonNull State state, @NonNull Task task) {
+
     }
 
     @Override
@@ -91,14 +142,18 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
 
     @Override
     public void showAddingDialogFragment() {
-        mFab.setEnabled(false);
-        mFab.setBackgroundResource(R.color.design_default_color_primary);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.small_menu_fragment_container, mAddingDialog)
+                .commit();
     }
 
     @Override
     public void hideAddingDialogFragment() {
-        mFab.setEnabled(true);
-        mFab.setBackgroundResource(R.color.colorAccent);
+        getSupportFragmentManager().beginTransaction()
+                .remove(mAddingDialog)
+//                .hide(mAddingDialog)
+                .commit();
     }
 
     @Override
@@ -111,21 +166,49 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
 
     }
 
-    private void initViews() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        mFab = (FloatingActionButton) findViewById(R.id.fab);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
+    @Override
+    public void addTaskToList(@NonNull Task task, @NonNull State state) {
+        switch (state) {
+            case OPEN: {
+                mToDoFragment.addTaskToList(task);
+                break;
+            }
+            case IN_WORK: {
+                mInWorkFragment.addTaskToList(task);
+                break;
+            }
+            default: {
+                mDoneFragment.addTaskToList(task);
+                break;
+            }
+        }
     }
 
-    private void initListeners() {
+    @Override
+    public void checkOutToProject(long projectId) {
+        CurrentUser.setProjectId(this, projectId);
+        mToDoFragment.checkOut();
+        mInWorkFragment.checkOut();
+        mDoneFragment.checkOut();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        mPresenter.onResult(requestCode, resultCode, data);
+    }
+
+
+    private void initViews() {
+        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+        mFab = (FloatingActionButton) findViewById(R.id.fab);
         mFab.setOnClickListener(v -> mPresenter.onFabClicked());
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        ViewPager mViewPager = (ViewPager) findViewById(R.id.container);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
     }
 
     /**
@@ -163,13 +246,9 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
         }
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
-        public SectionsPagerAdapter(FragmentManager fm) {
+        SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -177,11 +256,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityView 
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return tab1;
+                    return mToDoFragment;
                 case 1:
-                    return tab2;
+                    return mInWorkFragment;
                 case 2:
-                    return tab3;
+                    return mDoneFragment;
                 default:
                     return null;
             }

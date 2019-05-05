@@ -8,25 +8,25 @@ import android.support.annotation.Nullable;
 import com.igor.scrumassistant.data.constants.Role;
 
 @Entity
-public class Executor {
+public class Executor implements AppEntity {
 
     @PrimaryKey(autoGenerate = true)
     private long mId;
     private String mName;
     private String mSurname;
-    private Role mRole;
+    private String mRole;
+    private String mPassword;
     @Ignore
     private boolean mIsChosen = false;
-
-    public Executor(String name, String surname, Role role) {
-        this.mName = name;
-        this.mSurname = surname;
-        this.mRole = role;
-    }
 
     public Executor() {
     }
 
+    public Executor(String name, String surname, Role role) {
+        this.mName = name;
+        this.mSurname = surname;
+        this.mRole = role.toString();
+    }
 
     public long getId() {
         return mId;
@@ -52,11 +52,15 @@ public class Executor {
         this.mSurname = surname;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return mRole;
     }
 
     public void setRole(Role role) {
+        this.mRole = role.toString();
+    }
+
+    public void setRole(String role) {
         this.mRole = role;
     }
 
@@ -85,6 +89,14 @@ public class Executor {
     }
 
     public void setChosen(boolean chosen) {
-        this.mIsChosen = mIsChosen;
+        mIsChosen = chosen;
+    }
+
+    public String getPassword() {
+        return mPassword;
+    }
+
+    public void setPassword(String mPassword) {
+        this.mPassword = mPassword;
     }
 }

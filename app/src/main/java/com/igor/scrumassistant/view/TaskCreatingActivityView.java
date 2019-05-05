@@ -7,7 +7,7 @@ import com.igor.scrumassistant.model.entity.Executor;
 
 import java.util.List;
 
-public interface CreatingActivityView extends MvpView {
+public interface TaskCreatingActivityView extends MvpView {
 
     void setListEnabled(@NonNull List<Executor> executorList);
 

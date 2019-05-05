@@ -1,6 +1,10 @@
 package com.igor.scrumassistant.view;
 
+import android.support.annotation.NonNull;
+
+import com.igor.scrumassistant.model.entity.Task;
+
 public interface TaskStateChangedSubscriber {
 
-    void addChangedTaskStateToList(int changedTaskPosition);
+    void addChangedTaskStateToList(@NonNull Task task);
 }

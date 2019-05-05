@@ -16,7 +16,7 @@
 // * specified {@link OnListFragmentInteractionListener}.
 // * TODO: Replace the implementation with code for your data type.
 // */
-//public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder> {
+//public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecyclerViewAdapter.ProjectViewHolder> {
 //
 //
 ////    private final List<DummyItem> mValues;
@@ -28,14 +28,14 @@
 ////    }
 //
 ////    @Override
-////    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+////    public ProjectViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 ////        View view = LayoutInflater.from(parent.getContext())
 ////                .inflate(R.layout.fragment_item, parent, false);
-////        return new ViewHolder(view);
+////        return new ProjectViewHolder(view);
 ////    }
 ////
 ////    @Override
-////    public void onBindViewHolder(final ViewHolder holder, int position) {
+////    public void onBindViewHolder(final ProjectViewHolder holder, int position) {
 ////        holder.mItem = mValues.get(position);
 ////        holder.mIdView.setText(mValues.get(position).id);
 ////        holder.mContentView.setText(mValues.get(position).content);
@@ -57,13 +57,13 @@
 ////        return mValues.size();
 ////    }
 ////
-////    public class ViewHolder extends RecyclerView.ViewHolder {
+////    public class ProjectViewHolder extends RecyclerView.ProjectViewHolder {
 ////        public final View mView;
 ////        public final TextView mIdView;
 ////        public final TextView mContentView;
 ////        public DummyItem mItem;
 ////
-////        public ViewHolder(View view) {
+////        public ProjectViewHolder(View view) {
 ////            super(view);
 ////            mView = view;
 ////            mIdView = (TextView) view.findViewById(R.id.item_number);

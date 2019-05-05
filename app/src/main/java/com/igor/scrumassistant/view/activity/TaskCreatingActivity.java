@@ -20,13 +20,13 @@ import com.igor.scrumassistant.data.constants.Priority;
 import com.igor.scrumassistant.model.entity.CurrentUser;
 import com.igor.scrumassistant.model.entity.Executor;
 import com.igor.scrumassistant.model.entity.Task;
-import com.igor.scrumassistant.presentation.activity.CreatingActivityPresenter;
-import com.igor.scrumassistant.view.CreatingActivityView;
+import com.igor.scrumassistant.presentation.activity.TaskCreatingPresenter;
+import com.igor.scrumassistant.view.TaskCreatingActivityView;
 import com.igor.scrumassistant.view.adapter.ExecutorListAdapter;
 
 import java.util.List;
 
-public class CreatingActivity extends AppCompatActivity implements CreatingActivityView {
+public class TaskCreatingActivity extends AppCompatActivity implements TaskCreatingActivityView {
 
     private EditText mDescriptionText;
     private FloatingActionButton mSaveButton;
@@ -40,10 +40,10 @@ public class CreatingActivity extends AppCompatActivity implements CreatingActiv
     private Task newTask;
 
     @InjectPresenter
-    CreatingActivityPresenter mPresenter;
+    TaskCreatingPresenter mPresenter;
 
     public static Intent newIntent(@NonNull Context context) {
-        return new Intent(context, CreatingActivity.class);
+        return new Intent(context, TaskCreatingActivity.class);
     }
 
     @Override
@@ -57,8 +57,8 @@ public class CreatingActivity extends AppCompatActivity implements CreatingActiv
     }
 
     @ProvidePresenter
-    CreatingActivityPresenter providePresenter() {
-        return new CreatingActivityPresenter();
+    TaskCreatingPresenter providePresenter() {
+        return new TaskCreatingPresenter(this, getSupportLoaderManager());
     }
 
     private void initViews() {
@@ -72,6 +72,7 @@ public class CreatingActivity extends AppCompatActivity implements CreatingActiv
         mSaveButton.setOnClickListener(v -> mPresenter.onSaveButtonClicked());
     }
 
+    @Override
     public void setListEnabled(@NonNull List<Executor> executorList) {
         mExecutorList = executorList;
         mAdapter = new ExecutorListAdapter(mExecutorList);
@@ -89,14 +90,14 @@ public class CreatingActivity extends AppCompatActivity implements CreatingActiv
     private void addTaskToDescBoard() {
         setResult(RESULT_OK);
         getIntent().putExtra(Task.class.getCanonicalName(), newTask);
-        mPresenter.addToServer(newTask);
+        mPresenter.addTask(newTask);
         finish();
     }
 
     private void createTask() {
         String description = mDescriptionText.getText().toString();
-        long creatorId = CurrentUser.getUserId();
-        long projectId = CurrentUser.getProjectId();
+        long creatorId = CurrentUser.getUserId(this);
+        long projectId = CurrentUser.getProjectId(this);
         long executorID = mExecutorList.get(mAdapter.getChosenPosition()).getId();
         if (executorID != -1) {
             newTask = new Task(description, executorID, projectId, creatorId);

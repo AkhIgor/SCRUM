@@ -8,6 +8,8 @@
     <color name="white">#FFFFFF</color>
 
     <color name="menu_color">#6ACFDBE9</color>
+    <color name="login_activity_color">#A3018AE9</color>
+    <color name="divider_color">#6A525252</color>
 
     <color name="critical_status_color">#D7E00505</color>
     <color name="high_status_color">#D7F18513</color>

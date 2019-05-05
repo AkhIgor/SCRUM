@@ -2,6 +2,7 @@ package com.igor.scrumassistant.data.constants;
 
 import android.support.annotation.NonNull;
 
+
 public enum Priority {
     LOW("LOW"),
     MEDIUM("MEDIUM"),

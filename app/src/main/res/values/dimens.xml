@@ -5,6 +5,8 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="appbar_padding_top">8dp</dimen>
 
+    <dimen name="image_height">230dp</dimen>
+
     <dimen name="separator_height">1dp</dimen>
 
     <dimen name="margin_huge">132dp</dimen>
