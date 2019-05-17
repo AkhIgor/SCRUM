@@ -60,6 +60,7 @@ public abstract class SceneFragment extends MvpFragment
         super.onViewCreated(view, savedInstanceState);
 
         initViews(view);
+        mPresenter.onViewCreated();
     }
 
     @Override
@@ -71,27 +72,35 @@ public abstract class SceneFragment extends MvpFragment
     //вызов метода из Handler
     public void setTaskList(@NonNull List<Task> taskList) {
         mTaskList = taskList;
+        mAdapter.setList(taskList);
         mProgressBar.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
-        mAdapter.updateList(taskList);
     }
 
     @Override
     public void updateTaskList(@NonNull List<Task> taskList) {
         mTaskList.clear();
         mTaskList.addAll(taskList);
-        mAdapter.updateList(taskList);
     }
 
     @Override
+    public void addTaskToList() {
+        mAdapter.addTaskToTop();
+    }
+
     public void addTaskToList(@NonNull Task task) {
-        mTaskList.add(0, task);
-        mAdapter.addTaskToTop(task);
+        mPresenter.onTaskAdded(task);
+        addTaskToList();
+    }
+
+    @Override
+    public void cancelRemovement() {
+        mAdapter.bringTaskBack();
     }
 
     @Override
     public void removeTaskFromList(int position) {
-        mTaskList.remove(position);
+        mAdapter.notifyItemRemoved(position);
     }
 
     @Override

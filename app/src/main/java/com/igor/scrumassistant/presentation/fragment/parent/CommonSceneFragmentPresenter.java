@@ -11,12 +11,12 @@ import com.arellomobile.mvp.MvpPresenter;
 import com.igor.scrumassistant.data.Customer;
 import com.igor.scrumassistant.data.constants.State;
 import com.igor.scrumassistant.data.constants.Swipe;
+import com.igor.scrumassistant.data.database.Database;
 import com.igor.scrumassistant.data.provider.CommonDataProvider;
 import com.igor.scrumassistant.model.entity.Task;
 import com.igor.scrumassistant.view.CommonSceneFragmentView;
 
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
 import java.util.List;
 
 @InjectViewState
@@ -28,7 +28,7 @@ public abstract class CommonSceneFragmentPresenter extends MvpPresenter<CommonSc
     protected Context mContext;
     protected TaskListInitializer mHandler;
     protected CommonDataProvider mProvider;
-    protected List<Task> mTaskList = new ArrayList<>();
+    protected List<Task> mTaskList;
     private LoaderManager mLoaderManager;
 
     public CommonSceneFragmentPresenter(@NonNull Context context, @NonNull LoaderManager loaderManager) {
@@ -37,9 +37,19 @@ public abstract class CommonSceneFragmentPresenter extends MvpPresenter<CommonSc
         mHandler = new TaskListInitializer(this);
     }
 
-    //родительский класс
-    public void startFragment() {
+    @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+
         getList();
+    }
+
+    public void onViewCreated() {
+        if (mTaskList != null && !mTaskList.isEmpty()) {
+            initList();
+        } else {
+            getList();
+        }
     }
 
     //Retrofit
@@ -50,7 +60,7 @@ public abstract class CommonSceneFragmentPresenter extends MvpPresenter<CommonSc
 
     public void onAddChangedTaskStateToList(@NonNull Task task) {
         mTaskList.add(0, task);
-        getViewState().addTaskToList(task);
+        getViewState().addTaskToList();
     }
 
     @Override
@@ -65,10 +75,18 @@ public abstract class CommonSceneFragmentPresenter extends MvpPresenter<CommonSc
         task.setState(state);
         getViewState().removeTaskFromList(taskPosition);
         getViewState().notifyTaskPriorityChanged(state, task);
+
+        new Thread(() ->
+                Database.initDataBase(mContext).taskDao().updateTask(task)
+        ).start();
     }
 
     private void initList() {
         getViewState().setTaskList(mTaskList);
+    }
+
+    public void onTaskAdded(@NonNull Task task) {
+        mTaskList.add(0, task);
     }
 
     protected static class TaskListInitializer extends Handler {

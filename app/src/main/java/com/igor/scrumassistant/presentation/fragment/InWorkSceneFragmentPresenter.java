@@ -12,6 +12,8 @@ import com.igor.scrumassistant.model.entity.AppEntity;
 import com.igor.scrumassistant.model.entity.CurrentUser;
 import com.igor.scrumassistant.presentation.fragment.parent.CommonSceneFragmentPresenter;
 
+import java.util.LinkedList;
+
 import static com.igor.scrumassistant.data.constants.State.IN_WORK;
 
 @InjectViewState
@@ -41,6 +43,9 @@ public class InWorkSceneFragmentPresenter extends CommonSceneFragmentPresenter {
         new Thread(() -> {
             long projectId = CurrentUser.getProjectId(mContext);
             mTaskList = Database.initDataBase(mContext).taskDao().getTaskByStateInProject(projectId, IN_WORK.getValue());
+            if(mTaskList == null) {
+                mTaskList = new LinkedList<>();
+            }
             mHandler.sendEmptyMessage(LIST_READ);
         }).start();
     }

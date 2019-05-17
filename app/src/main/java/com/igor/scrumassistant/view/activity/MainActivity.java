@@ -21,7 +21,9 @@ import android.widget.TextView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.igor.scrumassistant.R;
+import com.igor.scrumassistant.data.constants.Priority;
 import com.igor.scrumassistant.data.constants.State;
+import com.igor.scrumassistant.data.database.Database;
 import com.igor.scrumassistant.model.entity.CurrentUser;
 import com.igor.scrumassistant.model.entity.Task;
 import com.igor.scrumassistant.presentation.activity.MainActivityPresenter;
@@ -64,41 +66,41 @@ public class MainActivity extends MvpAppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        new Thread(() -> {
-//            Task openTask = new Task();
-//            openTask.setState(State.OPEN);
-//            openTask.setPriority(Priority.CRITICAL);
-//            openTask.setPurpose("Доделать диплом");
-//            openTask.setProjectId(CurrentUser.getProjectId(this));
-//            openTask.setExecutorName("Игорь Ахмаров");
-//            openTask.setCreatorName("Игорь Ахмаров");
-//
-//            Task inWorkTask = new Task();
-//            inWorkTask.setState(State.IN_WORK);
-//            inWorkTask.setPriority(Priority.MEDIUM);
-//            inWorkTask.setProjectId(CurrentUser.getProjectId(this));
-//            inWorkTask.setPurpose("Доделать диплом");
-//            inWorkTask.setExecutorName("Игорь Ахмаров");
-//            inWorkTask.setCreatorName("Игорь Ахмаров");
-//
-//            Task doneTask = new Task();
-//            doneTask.setState(State.DONE);
-//            doneTask.setPriority(Priority.HIGH);
-//            doneTask.setProjectId(CurrentUser.getProjectId(this));
-//            doneTask.setPurpose("Доделать диплом");
-//            doneTask.setExecutorName("Игорь Ахмаров");
-//            doneTask.setCreatorName("Игорь Ахмаров");
-//
-//            Database db = Database.initDataBase(this);
-//            db.taskDao()
-//                    .addTask(openTask);
-//
-//            db.taskDao()
-//                    .addTask(inWorkTask);
-//
-//            db.taskDao()
-//                    .addTask(doneTask);
-//        }).start();
+        new Thread(() -> {
+            Task openTask = new Task();
+            openTask.setState(State.OPEN);
+            openTask.setPriority(Priority.CRITICAL);
+            openTask.setPurpose("Доделать диплом");
+            openTask.setProjectId(CurrentUser.getProjectId(this));
+            openTask.setExecutorName("Игорь Ахмаров");
+            openTask.setCreatorName("Игорь Ахмаров");
+
+            Task inWorkTask = new Task();
+            inWorkTask.setState(State.IN_WORK);
+            inWorkTask.setPriority(Priority.MEDIUM);
+            inWorkTask.setProjectId(CurrentUser.getProjectId(this));
+            inWorkTask.setPurpose("Доделать диплом");
+            inWorkTask.setExecutorName("Игорь Ахмаров");
+            inWorkTask.setCreatorName("Игорь Ахмаров");
+
+            Task doneTask = new Task();
+            doneTask.setState(State.DONE);
+            doneTask.setPriority(Priority.HIGH);
+            doneTask.setProjectId(CurrentUser.getProjectId(this));
+            doneTask.setPurpose("Доделать диплом");
+            doneTask.setExecutorName("Игорь Ахмаров");
+            doneTask.setCreatorName("Игорь Ахмаров");
+
+            Database db = Database.initDataBase(this);
+            db.taskDao()
+                    .addTask(openTask);
+
+            db.taskDao()
+                    .addTask(inWorkTask);
+
+            db.taskDao()
+                    .addTask(doneTask);
+        }).start();
         initViews();
     }
 

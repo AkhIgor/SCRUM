@@ -8,6 +8,47 @@
     tools:context=".view.activity.TaskCreatingActivity"
     tools:showIn="@layout/activity_creating">
 
+
+    <RadioButton
+        android:id="@+id/low_priority_radio_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:buttonTint="@color/low_status_color"
+        android:checked="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <RadioButton
+        android:id="@+id/medium_priority_radio_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/medium_status_color"
+        android:checked="true"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginLeft="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_medium"
+        app:layout_constraintStart_toEndOf="@id/low_priority_radio_button"
+        />
+
+    <RadioButton
+        android:id="@+id/high_priority_radio_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/high_status_color"
+        android:checked="true"
+        tools:layout_editor_absoluteX="74dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <RadioButton
+        android:id="@+id/critical_priority_radio_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/critical_status_color"
+        android:checked="true" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

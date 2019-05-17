@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -22,11 +21,12 @@ import com.igor.scrumassistant.model.entity.Executor;
 import com.igor.scrumassistant.model.entity.Task;
 import com.igor.scrumassistant.presentation.activity.TaskCreatingPresenter;
 import com.igor.scrumassistant.view.TaskCreatingActivityView;
+import com.igor.scrumassistant.view.activity.arello.MvpAppCompatActivity;
 import com.igor.scrumassistant.view.adapter.ExecutorListAdapter;
 
 import java.util.List;
 
-public class TaskCreatingActivity extends AppCompatActivity implements TaskCreatingActivityView {
+public class TaskCreatingActivity extends MvpAppCompatActivity implements TaskCreatingActivityView {
 
     private EditText mDescriptionText;
     private FloatingActionButton mSaveButton;

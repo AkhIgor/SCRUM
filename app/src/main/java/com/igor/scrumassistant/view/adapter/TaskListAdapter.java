@@ -14,13 +14,14 @@ import com.igor.scrumassistant.model.entity.Task;
 import com.igor.scrumassistant.view.adapter.interactive.ITouchHelperAdapter;
 import com.igor.scrumassistant.view.fragment.ItemSwipeListener;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>
         implements ITouchHelperAdapter {
 
     private final ItemSwipeListener mSwipeListener;
-    private List<Task> mTaskList;
+    private List<Task> mTaskList = new LinkedList<>();
 
     public TaskListAdapter(@NonNull ItemSwipeListener listener, @NonNull List<Task> taskList) {
         mSwipeListener = listener;
@@ -51,7 +52,9 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         return mTaskList.size();
     }
 
-    public void updateList(@NonNull List<Task> tasks) {
+    public void setList(@NonNull List<Task> tasks) {
+//        mTaskList.clear();
+//        mTaskList.addAll(tasks);
         mTaskList = tasks;
         notifyDataSetChanged();
     }
@@ -79,14 +82,15 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
 
     @Override
     public void onItemSwipe(@NonNull Swipe swipe, int position) {
-        mTaskList.remove(position);
-        notifyItemRemoved(position);
         mSwipeListener.onItemSwipe(swipe, position);
     }
 
-    public void addTaskToTop(@NonNull Task task) {
-        mTaskList.add(0, task);
+    public void addTaskToTop() {
         notifyItemInserted(0);
+    }
+
+    public void bringTaskBack() {
+        notifyDataSetChanged();
     }
 
     class TaskViewHolder extends RecyclerView.ViewHolder {

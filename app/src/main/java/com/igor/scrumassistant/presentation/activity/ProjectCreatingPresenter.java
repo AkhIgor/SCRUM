@@ -41,7 +41,6 @@ public class ProjectCreatingPresenter extends MvpPresenter<ProjectCreatingActivi
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
 
-        super.onFirstViewAttach();
 //        mProvider = CommonDataProvider.getInstance();
         //запрос на пользователей
 //        mProvider.getExecutorsInTheProject(this);

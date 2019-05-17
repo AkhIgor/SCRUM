@@ -12,8 +12,9 @@ import com.igor.scrumassistant.model.entity.AppEntity;
 import com.igor.scrumassistant.model.entity.CurrentUser;
 import com.igor.scrumassistant.presentation.fragment.parent.CommonSceneFragmentPresenter;
 
+import java.util.LinkedList;
+
 import static com.igor.scrumassistant.data.constants.State.DONE;
-import static com.igor.scrumassistant.data.constants.State.OPEN;
 
 @InjectViewState
 public class DoneSceneFragmentPresenter extends CommonSceneFragmentPresenter {
@@ -26,6 +27,8 @@ public class DoneSceneFragmentPresenter extends CommonSceneFragmentPresenter {
     public void onTaskSwiped(@NonNull Swipe swipe, int position) {
         if(swipe == Swipe.LEFT) {
             changeTaskState(State.IN_WORK, position);
+        } else {
+            getViewState().cancelRemovement();
         }
     }
 
@@ -40,6 +43,9 @@ public class DoneSceneFragmentPresenter extends CommonSceneFragmentPresenter {
         new Thread(() -> {
             long projectId = CurrentUser.getProjectId(mContext);
             mTaskList = Database.initDataBase(mContext).taskDao().getTaskByStateInProject(projectId, DONE.getValue());
+            if(mTaskList == null) {
+                mTaskList = new LinkedList<>();
+            }
             mHandler.sendEmptyMessage(LIST_READ);
         }).start();
     }
