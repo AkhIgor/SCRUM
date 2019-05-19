@@ -8,6 +8,18 @@
     tools:context=".view.activity.TaskCreatingActivity"
     tools:showIn="@layout/activity_creating">
 
+    <TextView
+        android:id="@+id/creating_activity_priority_const_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_huge"
+        android:layout_marginTop="@dimen/margin_medium"
+        android:layout_marginLeft="@dimen/margin_huge"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:text="@string/task_priority"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <RadioButton
         android:id="@+id/low_priority_radio_button"
@@ -15,43 +27,51 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_medium"
         android:layout_marginLeft="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_medium"
-        android:buttonTint="@color/low_status_color"
         android:checked="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:buttonTint="@color/low_status_color"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        app:layout_constraintTop_toBottomOf="@id/creating_activity_priority_const_text_view"
+        app:layout_constraintEnd_toStartOf="@id/medium_priority_radio_button" />
 
     <RadioButton
         android:id="@+id/medium_priority_radio_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:buttonTint="@color/medium_status_color"
-        android:checked="true"
-        android:layout_marginStart="@dimen/margin_medium"
-        android:layout_marginLeft="@dimen/margin_medium"
-        android:layout_marginTop="@dimen/margin_medium"
-        app:layout_constraintStart_toEndOf="@id/low_priority_radio_button"
-        />
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        app:layout_constraintTop_toBottomOf="@id/creating_activity_priority_const_text_view"
+        app:layout_constraintEnd_toStartOf="@id/high_priority_radio_button" />
 
     <RadioButton
         android:id="@+id/high_priority_radio_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:buttonTint="@color/high_status_color"
-        android:checked="true"
-        tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        app:layout_constraintTop_toBottomOf="@id/creating_activity_priority_const_text_view"
+        app:layout_constraintEnd_toStartOf="@id/critical_priority_radio_button" />
 
     <RadioButton
         android:id="@+id/critical_priority_radio_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:buttonTint="@color/critical_status_color"
-        android:checked="true" />
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_marginRight="@dimen/margin_medium"
+        android:layout_marginEnd="@dimen/margin_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/creating_activity_priority_const_text_view"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/critical_priority_radio_button">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -69,29 +89,6 @@
                 android:layout_marginEnd="@dimen/margin_medium"
                 android:layout_marginRight="@dimen/margin_medium"
                 app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/creating_activity_priority_const_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_huge"
-                android:layout_marginLeft="@dimen/margin_huge"
-                android:layout_marginTop="@dimen/margin_medium_small"
-                android:layout_marginEnd="@dimen/margin_medium"
-                android:layout_marginRight="@dimen/margin_medium"
-                android:text="@string/task_priority"
-                app:layout_constraintTop_toBottomOf="@id/creating_activity_description_text_view" />
-
-            <TextView
-                android:id="@+id/creating_activity_priority_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_huge"
-                android:layout_marginLeft="@dimen/margin_huge"
-                android:layout_marginTop="@dimen/margin_little"
-                android:layout_marginEnd="@dimen/margin_medium"
-                android:layout_marginRight="@dimen/margin_medium"
-                app:layout_constraintTop_toBottomOf="@id/creating_activity_priority_const_text_view" />
 
             <TextView
                 android:id="@+id/set_executor_static_text_view"

@@ -11,6 +11,7 @@ import android.support.v4.content.Loader;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.igor.scrumassistant.data.Customer;
+import com.igor.scrumassistant.data.constants.Role;
 import com.igor.scrumassistant.data.database.Database;
 import com.igor.scrumassistant.data.provider.database.ApiDatabaseProvider;
 import com.igor.scrumassistant.model.entity.AppEntity;
@@ -76,6 +77,42 @@ public class TaskCreatingPresenter extends MvpPresenter<TaskCreatingActivityView
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<Executor>> loader, List<Executor> executorList) {
+        Executor executor = new Executor();
+        executor.setName("Гарри");
+        executor.setSurname("Поттер");
+        executor.setRole(Role.SCRUM_MASTER);
+        executor.setPassword("123");
+
+        Executor executor1 = new Executor();
+        executor1.setName("Брюс");
+        executor1.setSurname("Уэйн");
+        executor1.setRole(Role.DESIGNER);
+        executor1.setPassword("123");
+
+        Executor executor2 = new Executor();
+        executor2.setName("Джон");
+        executor2.setSurname("Уик");
+        executor2.setRole(Role.ANALYTIC);
+        executor2.setPassword("123");
+
+        Executor executor3 = new Executor();
+        executor3.setName("Джейсон");
+        executor3.setSurname("Стетхем");
+        executor3.setRole(Role.PRODUCT_OWNER);
+        executor3.setPassword("123");
+
+        Executor executor4 = new Executor();
+        executor4.setName("Тони");
+        executor4.setSurname("Старк");
+        executor4.setRole(Role.DEVELOPER);
+        executor4.setPassword("123");
+
+        executorList.add(executor);
+        executorList.add(executor1);
+        executorList.add(executor2);
+        executorList.add(executor3);
+        executorList.add(executor4);
+
         getViewState().setListEnabled((List<Executor>) executorList);
     }
 

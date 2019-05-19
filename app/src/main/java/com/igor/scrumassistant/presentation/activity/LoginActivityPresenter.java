@@ -13,7 +13,6 @@ import com.igor.scrumassistant.model.entity.Executor;
 import com.igor.scrumassistant.view.LoginActivityView;
 
 import java.lang.ref.WeakReference;
-import java.util.IllegalFormatConversionException;
 
 @InjectViewState
 public class LoginActivityPresenter extends MvpPresenter<LoginActivityView> {
@@ -24,6 +23,7 @@ public class LoginActivityPresenter extends MvpPresenter<LoginActivityView> {
     private final Context mContext;
     private Database mDatabase;
     private final LoginHandler mHandler;
+    private long mLogin;
 
     public LoginActivityPresenter(@NonNull Context context) {
         mContext = context;
@@ -44,8 +44,8 @@ public class LoginActivityPresenter extends MvpPresenter<LoginActivityView> {
         getViewState().showProgressBar();
         new Thread(() -> {
             try {
-                long id = Long.parseLong(login);
-                Executor user = mDatabase.executorDao().getExecutorById(id);
+                mLogin = Long.parseLong(login);
+                Executor user = mDatabase.executorDao().getExecutorById(mLogin);
                 if (user != null && (user.getPassword().equals(password))) {
                     mHandler.sendEmptyMessage(USER_FOUND);
                 } else {
@@ -64,7 +64,9 @@ public class LoginActivityPresenter extends MvpPresenter<LoginActivityView> {
 
     private void signIn() {
         getViewState().hideProgressBar();
-        getViewState().setUserId();
+        if(CurrentUser.getUserId(mContext) != mLogin) {
+            getViewState().setUserId();
+        }
 
         if(CurrentUser.getProjectId(mContext) == -1) {
             getViewState().openProjectsList();

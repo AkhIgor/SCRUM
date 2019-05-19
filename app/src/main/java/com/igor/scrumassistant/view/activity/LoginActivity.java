@@ -15,6 +15,7 @@ import com.igor.scrumassistant.data.constants.Role;
 import com.igor.scrumassistant.data.database.Database;
 import com.igor.scrumassistant.model.entity.CurrentUser;
 import com.igor.scrumassistant.model.entity.Executor;
+import com.igor.scrumassistant.model.entity.Team;
 import com.igor.scrumassistant.presentation.activity.LoginActivityPresenter;
 import com.igor.scrumassistant.view.LoginActivityView;
 import com.igor.scrumassistant.view.activity.arello.MvpAppCompatActivity;
@@ -40,11 +41,46 @@ public class LoginActivity extends MvpAppCompatActivity implements LoginActivity
 
         new Thread(() -> {
             Executor executor = new Executor();
-            executor.setName("Igor");
-            executor.setSurname("Akhmarov");
-            executor.setRole(Role.DEVELOPER);
+            executor.setName("Гарри");
+            executor.setSurname("Поттер");
+            executor.setRole(Role.SCRUM_MASTER);
             executor.setPassword("123");
             Database.initDataBase(this).executorDao().addExecutor(executor);
+
+            Executor executor1 = new Executor();
+            executor1.setName("Брюс");
+            executor1.setSurname("Уэйн");
+            executor1.setRole(Role.DESIGNER);
+            executor1.setPassword("123");
+            Database.initDataBase(this).executorDao().addExecutor(executor1);
+
+            Executor executor2 = new Executor();
+            executor2.setName("Джон");
+            executor2.setSurname("Уик");
+            executor2.setRole(Role.ANALYTIC);
+            executor2.setPassword("123");
+            Database.initDataBase(this).executorDao().addExecutor(executor2);
+
+            Executor executor3 = new Executor();
+            executor3.setName("Джейсон");
+            executor3.setSurname("Стетхем");
+            executor3.setRole(Role.PRODUCT_OWNER);
+            executor3.setPassword("123");
+            Database.initDataBase(this).executorDao().addExecutor(executor3);
+
+            Executor executor4 = new Executor();
+            executor4.setName("Тони");
+            executor4.setSurname("Старк");
+            executor4.setRole(Role.DEVELOPER);
+            executor4.setPassword("123");
+            Database.initDataBase(this).executorDao().addExecutor(executor4);
+
+            Database.initDataBase(this).teamDao().addTeam(new Team(1, executor.getId()));
+            Database.initDataBase(this).teamDao().addTeam(new Team(1, executor1.getId()));
+            Database.initDataBase(this).teamDao().addTeam(new Team(1, executor2.getId()));
+            Database.initDataBase(this).teamDao().addTeam(new Team(1, executor3.getId()));
+            Database.initDataBase(this).teamDao().addTeam(new Team(1, executor4.getId()));
+
         }).start();
 
         initViews();
@@ -99,6 +135,7 @@ public class LoginActivity extends MvpAppCompatActivity implements LoginActivity
     @Override
     public void setUserId() {
         CurrentUser.setUserId(this, Long.parseLong(mLoginView.getText().toString()));
+        CurrentUser.setProjectId(this, Long.parseLong("-1"));
     }
 }
 

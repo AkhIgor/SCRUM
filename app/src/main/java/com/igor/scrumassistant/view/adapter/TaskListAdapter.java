@@ -53,8 +53,6 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
     }
 
     public void setList(@NonNull List<Task> tasks) {
-//        mTaskList.clear();
-//        mTaskList.addAll(tasks);
         mTaskList = tasks;
         notifyDataSetChanged();
     }

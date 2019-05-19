@@ -41,7 +41,7 @@ public class CurrentUser {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(PROJECT_ID, Context.MODE_PRIVATE);
         String stringProjectId = sharedPreferences.getString(PROJECT_ID, "");
-        if (stringProjectId != null && !stringProjectId.equals("")) {
+        if (stringProjectId != null && !stringProjectId.equals("") && !stringProjectId.equals("-1")) {
             projectId = Long.parseLong(stringProjectId);
         } else {
             projectId = -1;

@@ -115,7 +115,6 @@ public abstract class SceneFragment extends MvpFragment
 
     @Override
     public void checkOut() {
-//        mPresenter.initLoader();
     }
 
     //Вызывается в onViewCreated

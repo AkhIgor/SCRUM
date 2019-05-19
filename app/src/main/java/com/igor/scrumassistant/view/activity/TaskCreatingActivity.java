@@ -10,7 +10,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -30,7 +29,6 @@ public class TaskCreatingActivity extends MvpAppCompatActivity implements TaskCr
 
     private EditText mDescriptionText;
     private FloatingActionButton mSaveButton;
-    private TextView mPriorityTextView;
     private RecyclerView mExecutorListView;
     private ProgressBar mProgressBar;
     private ExecutorListAdapter mAdapter;
@@ -64,7 +62,6 @@ public class TaskCreatingActivity extends MvpAppCompatActivity implements TaskCr
     private void initViews() {
         mDescriptionText = findViewById(R.id.creating_activity_description_text_view);
         mSaveButton = findViewById(R.id.fab);
-        mPriorityTextView = findViewById(R.id.creating_activity_priority_text_view);
         mExecutorListView = findViewById(R.id.executor_list_view);
         mExecutorListView.setVisibility(View.INVISIBLE);
         mProgressBar = findViewById(R.id.executor_loading_progress_bar);
@@ -104,6 +101,10 @@ public class TaskCreatingActivity extends MvpAppCompatActivity implements TaskCr
         } else {
             newTask = new Task(description, projectId, creatorId);
         }
-        newTask.setPriority(Priority.getEnum(mPriorityTextView.getText().toString()));
+        newTask.setPriority(getPriority().toString());
+    }
+
+    private Priority getPriority() {
+        return null;
     }
 }
